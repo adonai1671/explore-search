@@ -8,7 +8,6 @@ const $$ = (s, p = document) => [...p.querySelectorAll(s)];
 const VALID_THEMES = ['midnight', 'ocean', 'ember', 'sakura', 'forest', 'daylight'];
 
 /* ---------- STATE ---------- */
-// Load saved settings, but RESET if theme is invalid (so old "blue" doesn't break things)
 let savedSettings = {};
 try { savedSettings = JSON.parse(localStorage.getItem('explore_settings') || '{}'); } catch {}
 if (!VALID_THEMES.includes(savedSettings.theme)) {
@@ -48,10 +47,7 @@ function toast(msg, ms = 2500) {
 
 /* ---------- SEARCH ENGINE CORE ---------- */
 const ENGINES = {
-  google:  q => `https://www.google.com/search?q=${encodeURIComponent(q)}`,
-  bing:    q => `https://www.bing.com/search?q=${encodeURIComponent(q)}`,
-  duck:    q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
-  youtube: q => `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`
+  duck: q => `https://html.duckduckgo.com/html/?q=${encodeURIComponent(q)}`
 };
 
 const isURL = s => /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/\S*)?$/.test(s.trim());
@@ -60,7 +56,23 @@ const normalizeURL = s => /^https?:\/\//.test(s.trim()) ? s.trim() : 'https://' 
 function navigate(input, mode = 'auto') {
   const raw = (input || '').trim();
   if (!raw) return;
-  const target = (mode === 'url' || isURL(raw)) ? normalizeURL(raw) : ENGINES.google(raw);
+
+  // If it's a normal search term (not a URL), show results inside the app
+  if (mode === 'auto' && !isURL(raw)) {
+    const searchUrl = ENGINES.duck(raw);
+    addHistory(raw, searchUrl);
+    
+    // Show the iframe, hide the home dashboard
+    $('#homeContent').style.display = 'none';
+    $('#searchResultsView').style.display = 'flex';
+    $('#searchIframe').src = searchUrl;
+    
+    toast(`Searching for: ${raw}`);
+    return;
+  }
+
+  // If it IS a URL, do the normal behavior (open in new tab)
+  const target = (mode === 'url' || isURL(raw)) ? normalizeURL(raw) : ENGINES.duck(raw);
   addHistory(raw, target);
   openTab(target, raw);
   toast(`Opening: ${raw}`);
@@ -214,6 +226,13 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#searchForm').addEventListener('submit', e => { e.preventDefault(); navigate($('#searchInput').value); });
   $('#addressForm').addEventListener('submit', e => { e.preventDefault(); navigate($('#addressInput').value); });
 
+  // Wire up the "Back to Home" button
+  $('#closeSearchBtn').onclick = () => {
+    $('#searchResultsView').style.display = 'none';
+    $('#searchIframe').src = '';
+    $('#homeContent').style.display = 'flex'; // Restore the dashboard
+  };
+
   $('#voiceBtn').onclick = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) return toast('Speech recognition not supported');
@@ -254,7 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
   $$('.nav-item[data-panel]').forEach(b => b.onclick = () => showPanel(b.dataset.panel));
   $$('[data-panel]').forEach(b => { if (!b.classList.contains('nav-item')) b.onclick = () => showPanel(b.dataset.panel); });
 
-  /* Opera-style theme cards */
   $$('.theme-card').forEach(c => c.onclick = () => {
     const name = c.dataset.theme;
     applyTheme(name);
@@ -302,6 +320,10 @@ function setZoom(v) {
 
 function showPanel(name) {
   const content = $('#homeContent');
+  // Restore search view hidden if switching panels
+  $('#searchResultsView').style.display = 'none';
+  content.style.display = 'flex';
+
   const views = {
     Home: () => location.reload(),
     Tabs: () => `<h2 style="margin-bottom:16px">Open Tabs (${state.tabs.length})</h2>` + state.tabs.map(t => `<div class="list-row"><button class="row-main" data-url="${t.url}">${escapeHTML(t.title)}</button></div>`).join(''),

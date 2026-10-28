@@ -10,8 +10,7 @@
 <body>
   <div class="browser-shell">
     <header class="chrome-bar">
-      <div class="window-dots"><i></i><i></i><i></i></div>
-      <div class="tab active-tab"><span>Explore Now</span><button class="tiny-close" title="Close tab">×</button></div>
+      <div class="tab active-tab"><span>Explore</span><button class="tiny-close" title="Close tab">×</button></div>
       <button class="add-tab" id="newTab" title="New tab">+</button>
     </header>
 
@@ -54,13 +53,24 @@
       </aside>
 
       <main class="home-content" id="homeContent">
+        
+        <!-- NEW SEARCH RESULTS VIEW -->
+        <div id="searchResultsView" style="display: none; width: 100%; height: calc(100vh - 180px); flex-direction: column; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button id="closeSearchBtn" class="go-button" style="width: auto; padding: 0 16px; border-radius: 8px; color: #fff; border: none; cursor: pointer;">← Back to Home</button>
+            <small style="color: var(--muted);">Search results powered by DuckDuckGo</small>
+          </div>
+          <iframe id="searchIframe" src="" style="flex: 1; width: 100%; border: 1px solid var(--border); border-radius: 12px; background: white;"></iframe>
+        </div>
+        <!-- END SEARCH RESULTS VIEW -->
+
         <div class="top-meta">
           <div class="weather"><span>☀️</span><div><b>22°C</b><small>Kigali, Rwanda</small></div></div>
           <div class="date-time"><small id="dateLabel"></small><b id="clock">--:--</b></div>
         </div>
 
         <section class="hero">
-          <div class="hero-brand"><div class="hero-logo">E</div><h1>Explore</h1></div>
+          <div class="hero-brand"><div class="hero-logo">E</div><h1>Explore Now</h1></div>
           <p class="tagline">Search <i>•</i> Discover <i>•</i> Achieve</p>
           <form id="searchForm" class="big-search">
             <span>⌕</span>
