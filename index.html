@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="midnight">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a1428">
+  <title>Explore Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="browser-shell">
+    <header class="chrome-bar">
+      <div class="window-dots"><i></i><i></i><i></i></div>
+      <div class="tab active-tab"><span>Explore</span><button class="tiny-close" title="Close tab">×</button></div>
+      <button class="add-tab" id="newTab" title="New tab">+</button>
+    </header>
+
+    <div class="toolbar">
+      <button class="tool-icon" id="backBtn" title="Back">‹</button>
+      <button class="tool-icon" id="forwardBtn" title="Forward">›</button>
+      <button class="tool-icon" id="reloadBtn" title="Reload">↻</button>
+      <form id="addressForm" class="address-form">
+        <span class="search-symbol">⌕</span>
+        <input id="addressInput" aria-label="Explore or enter URL" placeholder="Explore or enter a URL" autocomplete="off">
+        <button type="button" id="bookmarkBtn" class="address-action" title="Bookmark this page">☆</button>
+      </form>
+      <button class="tool-icon" id="downloadBtn" title="Downloads">⇩</button>
+      <button class="tool-icon" id="profileBtn" title="Profile">●</button>
+      <button class="tool-icon" id="menuBtn" title="Menu">⋮</button>
+    </div>
+
+    <div class="app-layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">E</div>
+          <div><strong>Explore</strong><small>Search · Discover · Achieve</small></div>
+        </div>
+        <nav class="main-nav">
+          <button class="nav-item selected" data-panel="Home">⌂ <span>Home</span></button>
+          <button class="nav-item" id="navNewTab">⊕ <span>New Tab</span></button>
+          <button class="nav-item" data-panel="Tabs">▢ <span>Tabs</span><b id="tabCount">1</b></button>
+          <button class="nav-item" data-panel="History">◷ <span>History</span></button>
+          <button class="nav-item" data-panel="Bookmarks">♧ <span>Bookmarks</span></button>
+          <button class="nav-item" data-panel="Downloads">⇩ <span>Downloads</span></button>
+          <button class="nav-item" data-panel="Extensions">✣ <span>Extensions</span></button>
+          <button class="nav-item" data-panel="Settings">⚙ <span>Settings</span></button>
+        </nav>
+        <div class="sidebar-promo">
+          <div class="globe">◉</div>
+          <strong>Your world, faster</strong>
+          <p>A smarter starting point for your everyday browsing.</p>
+        </div>
+        <div class="version">Explore · Frontend demo</div>
+      </aside>
+
+      <main class="home-content" id="homeContent">
+        <div class="top-meta">
+          <div class="weather"><span>☀️</span><div><b>22°C</b><small>Kigali, Rwanda</small></div></div>
+          <div class="date-time"><small id="dateLabel"></small><b id="clock">--:--</b></div>
+        </div>
+
+        <section class="hero">
+          <div class="hero-brand"><div class="hero-logo">E</div><h1>Explore</h1></div>
+          <p class="tagline">Search <i>•</i> Discover <i>•</i> Achieve</p>
+          <form id="searchForm" class="big-search">
+            <span>⌕</span>
+            <input id="searchInput" placeholder="Search the web..." autocomplete="off" aria-label="Search the web">
+            <button type="button" id="voiceBtn" title="Voice search">🎙</button>
+            <button type="button" id="aiBtn" title="AI helper">✦</button>
+            <button class="go-button" aria-label="Search">➜</button>
+          </form>
+          <div class="shortcuts" id="shortcuts">
+            <a class="shortcut" href="https://www.google.com" data-site="Google"><span class="site-icon google">G</span><small>Google</small></a>
+            <a class="shortcut" href="https://www.youtube.com" data-site="YouTube"><span class="site-icon youtube">▶</span><small>YouTube</small></a>
+            <a class="shortcut" href="https://chatgpt.com" data-site="ChatGPT"><span class="site-icon chatgpt">✳</span><small>ChatGPT</small></a>
+            <a class="shortcut" href="https://mail.google.com" data-site="Gmail"><span class="site-icon gmail">M</span><small>Gmail</small></a>
+            <a class="shortcut" href="https://www.instagram.com" data-site="Instagram"><span class="site-icon instagram">◎</span><small>Instagram</small></a>
+            <a class="shortcut" href="https://www.facebook.com" data-site="Facebook"><span class="site-icon facebook">f</span><small>Facebook</small></a>
+            <a class="shortcut" href="https://x.com" data-site="X"><span class="site-icon xsite">X</span><small>X</small></a>
+            <button class="shortcut add-shortcut" id="addShortcut"><span>+</span><small>Add</small></button>
+          </div>
+        </section>
+
+        <section class="feature-grid">
+          <article class="feature-card"><div class="feature-icon">ϟ</div><h3>Fast & simple</h3><p>Search the web with your preferred search provider.</p></article>
+          <article class="feature-card"><div class="feature-icon">⬡</div><h3>Privacy tools</h3><p>Open private windows in your installed browser.</p></article>
+          <article class="feature-card"><div class="feature-icon">✣</div><h3>Productivity</h3><p>Keep bookmarks, notes and handy tools close.</p></article>
+          <article class="feature-card"><div class="feature-icon">☷</div><h3>Your style</h3><p>Choose a theme and personalize this dashboard.</p></article>
+        </section>
+
+        <section class="lower-grid">
+          <div class="trending-panel panel">
+            <h2>🔥 Trending searches <button id="refreshTrending" class="text-button">Refresh</button></h2>
+            <div class="trend-list">
+              <button class="trend" data-query="AI tools for students"><span>01</span>AI tools for students <b>↗</b></button>
+              <button class="trend" data-query="web development trends"><span>02</span>Web development trends <b>↗</b></button>
+              <button class="trend" data-query="best laptops 2026"><span>03</span>Best laptops 2026 <b>↗</b></button>
+              <button class="trend" data-query="learn programming online"><span>04</span>Learn programming online <b>↗</b></button>
+              <button class="trend" data-query="Rwanda tourism"><span>05</span>Rwanda tourism <b>↗</b></button>
+              <button class="trend" data-query="latest technology news"><span>06</span>Latest technology news <b>↗</b></button>
+            </div>
+          </div>
+          <div class="explore-card">
+            <div class="mountain-art">◈</div>
+            <div>
+              <h3>Explore something new</h3>
+              <p>Curiosity starts with one search.</p>
+              <button id="exploreBtn">Explore the web →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="news-panel panel">
+          <h2>Quick tools <span>Useful utilities, right here</span></h2>
+          <div class="quick-tools">
+            <button data-tool="Notes">📝<span>Notes</span></button>
+            <button data-tool="Calculator">🧮<span>Calculator</span></button>
+            <button data-tool="Translate">🌐<span>Translate</span></button>
+            <button data-tool="Focus timer">⏱️<span>Focus timer</span></button>
+            <button data-tool="Weather">🌤️<span>Weather</span></button>
+            <button data-tool="QR generator">▦<span>QR generator</span></button>
+          </div>
+        </section>
+      </main>
+
+      <aside class="right-panel">
+        <section class="right-card">
+          <h2>ϟ Quick access</h2>
+          <div class="quick-grid">
+            <button data-tool="AI Assistant"><span class="round">✧</span>AI assistant</button>
+            <button data-tool="Translate"><span class="round">文</span>Translate</button>
+            <button data-tool="Screenshot"><span class="round">▣</span>Screenshot</button>
+            <button data-tool="Notes"><span class="round">▤</span>Notes</button>
+            <button data-tool="Calculator"><span class="round">⌗</span>Calculator</button>
+            <button data-tool="Weather"><span class="round">☀</span>Weather</button>
+          </div>
+        </section>
+        <section class="right-card">
+          <h2>▢ Tab management</h2>
+          <button class="setting-row" id="newTabRight">New tab <kbd>Ctrl+T</kbd></button>
+          <button class="setting-row" id="closeTab">Close current tab <kbd>Ctrl+W</kbd></button>
+          <button class="setting-row" id="duplicateTab">Duplicate tab <kbd>Ctrl+D</kbd></button>
+          <button class="setting-row" data-panel="Tabs">Open tab manager <kbd>⇧⌘T</kbd></button>
+        </section>
+
+        <section class="right-card">
+          <h2>◉ Themes</h2>
+          <div class="theme-grid">
+            <button class="theme-card active" data-theme="midnight" title="Midnight">
+              <div class="theme-thumb midnight"></div>
+              <small>Midnight</small>
+            </button>
+            <button class="theme-card" data-theme="ocean" title="Ocean">
+              <div class="theme-thumb ocean"></div>
+              <small>Ocean</small>
+            </button>
+            <button class="theme-card" data-theme="ember" title="Ember">
+              <div class="theme-thumb ember"></div>
+              <small>Ember</small>
+            </button>
+            <button class="theme-card" data-theme="sakura" title="Sakura">
+              <div class="theme-thumb sakura"></div>
+              <small>Sakura</small>
+            </button>
+            <button class="theme-card" data-theme="forest" title="Forest">
+              <div class="theme-thumb forest"></div>
+              <small>Forest</small>
+            </button>
+            <button class="theme-card" data-theme="daylight" title="Daylight">
+              <div class="theme-thumb daylight"></div>
+              <small>Daylight</small>
+            </button>
+          </div>
+        </section>
+
+        <section class="right-card">
+          <h2>✦ Other features</h2>
+          <label class="toggle-row">Reading mode <input type="checkbox" id="readingToggle"><span class="toggle"></span></label>
+          <label class="toggle-row">Reduce motion <input type="checkbox" id="motionToggle"><span class="toggle"></span></label>
+          <div class="setting-row zoom-row">Dashboard zoom <button id="zoomOut">−</button><span id="zoomLabel">100%</span><button id="zoomIn">+</button></div>
+          <button class="setting-row" id="fullscreenBtn">⛶ Full screen <kbd>F11</kbd></button>
+          <button class="setting-row" id="clearData">⌫ Clear local data</button>
+        </section>
+        <section class="upgrade-card">
+          <div>✦ Make Explore yours</div>
+          <p>Your settings, bookmarks and notes are saved in this browser.</p>
+          <button id="settingsBtn">Personalize</button>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">Explore</h2>
+      <button id="modalClose" aria-label="Close">×</button>
+    </div>
+    <div id="modalBody"></div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
